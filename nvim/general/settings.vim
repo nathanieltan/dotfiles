@@ -23,9 +23,9 @@ set smartindent                         " Makes indenting smart
 set autoindent                          " Good auto indent
 set laststatus=0                        " Always display the status line
 set number                              " Line numbers
-"set cursorline                          " Enable highlighting of the current line
-set background=light                    " tell vim what the background color looks like
-set showtabline=2                       " Always show tabs 
+"set cursorline                         " Enable highlighting of the current line
+set background=dark                     " tell vim what the background color looks like
+set showtabline=1                       " Always show tabs 
 set noshowmode                          " We don't need to see things like -- INSERT -- anymore
 set nobackup                            " This is recommended by coc
 set nowritebackup                       " This is recommended by coc
@@ -36,3 +36,19 @@ set clipboard=unnamedplus               " Copy paste between vim and everything 
 
 au! BufWritePost $MYVIMRC source %      " auto source when writing to init.vm alternatively you can run :source $MYVIMRC
 
+colorscheme dracula
+hi Normal guibg=NONE ctermbg=NONE
+
+"Configure nvim-treesitter
+lua << EOF
+    require'nvim-treesitter.configs'.setup {
+      -- A list of parser names
+      ensure_installed = { "c", "lua", "python", "rust"},
+
+      sync_install = false,
+
+      highlight = {
+        enable = true,
+      },
+    }
+EOF

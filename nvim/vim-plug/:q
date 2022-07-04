@@ -7,5 +7,4 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     " Context Syntax Tree for highlighting
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
-
 call plug#end()
