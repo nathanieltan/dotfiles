@@ -1,7 +1,7 @@
 # Created by newuser for 5.8.1
 
-neofetch
-alias cdrust="cd ~/Documents/RustProjects/"
+fastfetch
+
 setopt autocd
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
@@ -11,13 +11,49 @@ setopt beep
 bindkey -v
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
-zstyle :compinstall filename '/home/nathaniel/.zshrc'
+zstyle :compinstall filename "$HOME/.zshrc"
 
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
+read line </etc/os-release
+distro=${${${line#*=}#*\"}%\"*}
+
 eval "$(starship init zsh)"
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/share/doc/pkgfile/command-not-found.zsh
+if [[ -f /etc/arch-release ]]; then
+  # Arch Linux is detected
+  source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+  source /usr/share/doc/pkgfile/command-not-found.zsh
+elif [ $distro = "Pop!_OS" ]; then
+  source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+else
+  echo 'Unknown OS!'
+fi
+
+export PATH="/$HOME/.cargo/bin:$PATH"
+export VISUAL=nvim
+export EDITOR="$VISUAL"
+export TERM=xterm-256color
+
+# Aliases
+alias cat="batcat"
+alias grep="rg"
+alias ls="exa"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$("/$HOME/anaconda3/bin/conda" 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/$HOME/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/$HOME/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/$HOME/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<

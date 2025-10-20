@@ -1,8 +1,8 @@
-rm -R "/home/$USER/.config/nvim"
-rm -R "/home/$USER/.config/kitty"
-rm -R "/home/$USER/.config/alacritty"
-rm -R "/home/$USER/.zshrc"
-rm -R "/home/$USER/.config/starship.toml"
+rm -Rf "/home/$USER/.config/nvim"
+rm -Rf "/home/$USER/.config/kitty"
+rm -Rf "/home/$USER/.config/alacritty"
+rm -Rf "/home/$USER/.zshrc"
+rm -Rf "/home/$USER/.config/starship.toml"
 
 ln -s "$PWD/nvim" "/home/$USER/.config/nvim"
 ln -s "$PWD/kitty" "/home/$USER/.config/kitty"
