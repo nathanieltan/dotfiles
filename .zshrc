@@ -17,18 +17,24 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
-read line </etc/os-release
-distro=${${${line#*=}#*\"}%\"*}
-
 eval "$(starship init zsh)"
-if [[ -f /etc/arch-release ]]; then
+
+if [[ -f /etc/os-release ]]; then
+  read line </etc/os-release
+  distro=${${${line#*=}#*\"}%\"*}
+  if [ $distro = "Pop!_OS" ]; then
+    source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+    source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+  fi
+elif [[ -f /etc/arch-release ]]; then
   # Arch Linux is detected
   source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
   source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
   source /usr/share/doc/pkgfile/command-not-found.zsh
-elif [ $distro = "Pop!_OS" ]; then
-  source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-  source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+elif [[ $OSTYPE == 'darwin'* ]]; then
+  plugins=(git zsh-syntax-highlighting)
+  source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  source $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 else
   echo 'Unknown OS!'
 fi
